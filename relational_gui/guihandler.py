@@ -283,21 +283,14 @@ class relForm(QtGui.QMainWindow):
                     QtGui.QApplication.translate("Form", "Load Relation(s)"), 
                     "", 
                     QtGui.QApplication.translate("Form", "Relations (*.csv);;Text Files (*.txt);;All Files (*)"))
-            for tempfilename in files:
-                filename = compatibility.get_filename(tempfilename)
-                filename = filename.__str__()
-                # Default relation's name
-                f = os.path.split(filename)  # Split the full path
-                defname = f[len(f) - 1].lower()  # Takes only the lowercase filename
 
-                if len(defname) == 0:
-                    return
-
-                if (defname.endswith(".csv")):  # removes the extension
-                    defname = defname[:-4]
-                print defname
-
-                self.loadRelationx(filename,defname)
+            
+            for tempfilename in files:       
+                tmp = compatibility.get_filename(tempfilename)
+                if files.count() == 1: #if we only have one element to loop through, don't react on name.
+                    self.loadRelationx(tmp,name)
+                    return    
+                self.loadRelationx(tmp,u"")
             return
         self.loadRelationx(filename,name)
         
@@ -305,17 +298,9 @@ class relForm(QtGui.QMainWindow):
         '''Loads a relation. Without parameters it will ask the user which relation to load,
         otherwise it will load filename, giving it name.
         It shouldn't be called giving filename but not giving name.'''
-        # Asking for file to load
-        if filename == None:
-            filename = QtGui.QFileDialog.getOpenFileName(
-                self, 
-                QtGui.QApplication.translate("Form", "Load Relation"), 
-                "", 
-                QtGui.QApplication.translate("Form", "Relations (*.csv);;Text Files (*.txt);;All Files (*)"))
-            filename = compatibility.get_filename(filename)
 
         # Default relation's name
-        f = filename.split('/')  # Split the full path
+        f = os.path.split(filename)  # Split the full path
         defname = f[len(f) - 1].lower()  # Takes only the lowercase filename
 
         if len(defname) == 0:
@@ -334,6 +319,10 @@ class relForm(QtGui.QMainWindow):
 
             # Patch provided by Angelo 'Havoc' Puglisi
             name = compatibility.get_py_str(res[0])
+        else:
+            res = defname
+            name = defname
+
 
         if not rtypes.is_valid_relation_name(name):
             r = QtGui.QApplication.translate(

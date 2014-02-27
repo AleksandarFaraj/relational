@@ -403,7 +403,7 @@ class Ui_MainWindow(object):
 
         self.cmdClearQuery.setText(_translate("MainWindow", "⌫ CTRL+Backspace", None))
 
-        self.cmdClearQuery.setShortcut(_translate("MainWindow", "Ctrl+E", None))
+        self.cmdClearQuery.setShortcut(_translate("MainWindow", "Ctrl+Backspace", None))
         self.cmdExecute.setText(_translate("MainWindow", "Execute Ctrl+E", None))
         self.cmdExecute.setShortcut(_translate("MainWindow", "Ctrl+E", None))
         self.menuFile.setTitle(_translate("MainWindow", "&File", None))
