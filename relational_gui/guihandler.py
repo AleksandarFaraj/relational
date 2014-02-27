@@ -187,6 +187,21 @@ class relForm(QtGui.QMainWindow):
             del self.relations[compatibility.get_py_str(i.text())]
         self.updateRelations()
 
+    def clearLastRelations(self):
+
+        for i in range(0,self.ui.lstRelations.count()):
+            j=self.ui.lstRelations.item(i)
+            if j.text().__str__().startswith("_"):
+                del self.relations[compatibility.get_py_str(j.text())]
+        self.updateRelations()
+        self.clearHistory()
+        self.resetLastCounter()
+    def clearHistory(self):
+        self.ui.lstHistory.clear()
+    def resetLastCounter(self):
+        self.qcounter = 1
+        compatibility.set_utf8_text(self.ui.txtResult, u"_last%d" % self.qcounter) 
+
     def editRelation(self):
         import creator
         for i in self.ui.lstRelations.selectedItems():

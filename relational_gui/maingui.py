@@ -264,7 +264,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QObject.connect(self.cmdClearQuery, QtCore.SIGNAL(_fromUtf8("clicked()")), self.txtQuery.clear)
-        QtCore.QObject.connect(self.cmdClearHistory, QtCore.SIGNAL(_fromUtf8("clicked()")), self.lstHistory.clear)
+        QtCore.QObject.connect(self.cmdClearHistory, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.clearLastRelations)
         QtCore.QObject.connect(self.txtQuery, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.execute)
         QtCore.QObject.connect(self.cmdExecute, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.execute)
         QtCore.QObject.connect(self.cmdAbout, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.showAbout)
@@ -389,15 +389,20 @@ class Ui_MainWindow(object):
         self.groupBox.setTitle(_translate("MainWindow", "Relations", None))
         self.lstRelations.setSortingEnabled(True)
         self.cmdNew.setText(_translate("MainWindow", "New relation", None))
+
         self.cmdLoad.setText(_translate("MainWindow", "Load relation Ctrl+L", None))
+        self.cmdLoad.setShortcut(_translate("MainWindow", "Ctrl+L", None))
+
         self.cmdSave.setText(_translate("MainWindow", "Save relation", None))
         self.cmdEdit.setText(_translate("MainWindow", "Edit relation", None))
         self.cmdUnload.setText(_translate("MainWindow", "Unload relation Ctrl+W", None))
-        self.cmdUnload.setText(_translate("MainWindow", "Unload relation Ctrl+W", None))
+        self.cmdUnload.setShortcut(_translate("MainWindow", "Unload relation Ctrl+W", None))
         self.groupBox_2.setTitle(_translate("MainWindow", "Attributes", None))
         self.txtResult.setText(_translate("MainWindow", "_last1", None))
         self.label.setText(_translate("MainWindow", "=", None))
+
         self.cmdClearQuery.setText(_translate("MainWindow", "⌫ CTRL+Backspace", None))
+
         self.cmdClearQuery.setShortcut(_translate("MainWindow", "Ctrl+E", None))
         self.cmdExecute.setText(_translate("MainWindow", "Execute Ctrl+E", None))
         self.cmdExecute.setShortcut(_translate("MainWindow", "Ctrl+E", None))
@@ -406,7 +411,7 @@ class Ui_MainWindow(object):
         self.menuRelations.setTitle(_translate("MainWindow", "Relations", None))
         self.actionAbout.setText(_translate("MainWindow", "&About", None))
         self.action_Load_relation.setText(_translate("MainWindow", "&Load relation", None))
-        self.action_Load_relation.setShortcut(_translate("MainWindow", "Ctrl+L", None))
+        self.action_Load_relation
         self.action_Save_relation.setText(_translate("MainWindow", "&Save relation", None))
         self.action_Quit.setText(_translate("MainWindow", "&Quit", None))
         self.actionCheck_for_new_versions.setText(_translate("MainWindow", "Check for new versions", None))
