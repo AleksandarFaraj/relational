@@ -116,7 +116,7 @@ class relForm(QtGui.QMainWindow):
             self.showRelation(self.selectedRelation)
                               # Show the result in the table
         except Exception, e:
-            print e.__unicode__()
+            #print e.__unicode__()
             QtGui.QMessageBox.information(None, QtGui.QApplication.translate("Form", "Error"), u"%s\n%s" %
                                           (QtGui.QApplication.translate("Form", "Check your query!"), e.__unicode__()))
             return
@@ -258,15 +258,45 @@ class relForm(QtGui.QMainWindow):
             ui = about.Ui_Dialog()
             ui.setupUi(self.About)
         self.About.show()
-
     def loadRelation(self, filename=None, name=None):
+        '''Hack.
+        Will run first and intercept normal behaviour when filename is none.
+        '''
+        if filename == None:
+            files = QtGui.QFileDialog.getOpenFileNames(
+                    self, 
+                    QtGui.QApplication.translate("Form", "Load Relation(s)"), 
+                    "", 
+                    QtGui.QApplication.translate("Form", "Relations (*.csv);;Text Files (*.txt);;All Files (*)"))
+            for tempfilename in files:
+                filename = compatibility.get_filename(tempfilename)
+                filename = filename.__str__()
+                # Default relation's name
+                f = os.path.split(filename)  # Split the full path
+                defname = f[len(f) - 1].lower()  # Takes only the lowercase filename
+
+                if len(defname) == 0:
+                    return
+
+                if (defname.endswith(".csv")):  # removes the extension
+                    defname = defname[:-4]
+                print defname
+
+                self.loadRelationx(filename,defname)
+            return
+        self.loadRelationx(filename,name)
+        
+    def loadRelationx(self, filename=None, name=None):
         '''Loads a relation. Without parameters it will ask the user which relation to load,
         otherwise it will load filename, giving it name.
         It shouldn't be called giving filename but not giving name.'''
         # Asking for file to load
         if filename == None:
-            filename = QtGui.QFileDialog.getOpenFileName(self, QtGui.QApplication.translate(
-                "Form", "Load Relation"), "", QtGui.QApplication.translate("Form", "Relations (*.csv);;Text Files (*.txt);;All Files (*)"))
+            filename = QtGui.QFileDialog.getOpenFileName(
+                self, 
+                QtGui.QApplication.translate("Form", "Load Relation"), 
+                "", 
+                QtGui.QApplication.translate("Form", "Relations (*.csv);;Text Files (*.txt);;All Files (*)"))
             filename = compatibility.get_filename(filename)
 
         # Default relation's name
